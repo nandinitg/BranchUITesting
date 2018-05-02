@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="BranchTestSuite"  >
+    <!--  listeners>
+        <listener class-name="utils.Listeners.TestListener"/>
+        <listener class-name="utils.Listeners.AnnotationTransformer"/>
+    </listeners-->
+   
+    <test name="chromeTest">
+		<parameter name="browsername" value="chrome" />
+		<classes>
+			<class name="tests.BaseTest" />
+			<class name="tests.TeamDataTest" />
+		</classes>
+	</test>
+    <!-- test name="safariTest">
+		<parameter name="browsername" value="safari" />
+		<classes>
+			<class name="tests.BaseTest" />
+			<class name="tests.TeamDataTest" />
+		</classes>
+	</test-->
+    
+</suite>
