@@ -87,21 +87,20 @@ public class HomePage extends BasePage{
     			return false;
         }
     
-     private boolean checkForCookiePopup(String cookieAlertId) throws InterruptedException {
+	private boolean checkForCookiePopup(String cookieAlertId) throws InterruptedException {
 		try {
-	         if(driver.findElement(By.id(cookieAlertId)).isDisplayed())
-	            return true;
-	         else return false;
-	      }
-	      catch (NoSuchElementException exception) {
-	    	exception.printStackTrace();
-	        return false;
-	      }
-	      catch (StaleElementReferenceException exception) {
-	    	  exception.printStackTrace();
-	        return false;
-	      }
+			if (driver.findElement(By.id(cookieAlertId)).isDisplayed())
+				return true;
+			else
+				return false;
+		} catch (NoSuchElementException exception) {
+			exception.printStackTrace();
+			return false;
+		} catch (StaleElementReferenceException exception) {
+			exception.printStackTrace();
+			return false;
 		}
+	}
 	
      private void verifyNavigation(String linkXpath, String expectedTitle) throws InterruptedException {
     	 BasePage basePage = new BasePage(driver, wait);

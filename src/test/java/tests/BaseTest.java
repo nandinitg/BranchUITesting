@@ -27,17 +27,17 @@ public class BaseTest {
 					// selenium grid
 	@Parameters({ "browsername" })
 	public void setupTest(String browser) throws MalformedURLException {
-		
-	//Configs for executing the test suite on different platform like Mac/Linux and different browsers like Chrome/safari
-		
-				/*
-				 * String Node = "http://192.168.0.15:5555/wd/hub"; //Desired Capabilities
-				 * DesiredCapabilities caps = DesiredCapabilities.chrome();
-				 * caps.setCapability("browserName", browser); caps.setCapability("platform",
-				 * Platform.MAC); caps.setCapability("version", "66.0.3359.139"); driver = new
-				 * RemoteWebDriver(new URL(Node),caps);
-				 */
-		
+
+		// Configs for executing the test suite on different platform like Mac/Linux and
+		// different browsers like Chrome/safari
+
+		/*
+		 * String Node = "http://192.168.0.15:5555/wd/hub"; //Desired Capabilities
+		 * DesiredCapabilities caps = DesiredCapabilities.chrome();
+		 * caps.setCapability("browserName", browser); caps.setCapability("platform",
+		 * Platform.MAC); caps.setCapability("version", "66.0.3359.139"); driver = new
+		 * RemoteWebDriver(new URL(Node),caps);
+		 */
 
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
@@ -50,13 +50,13 @@ public class BaseTest {
 		driver = new ChromeDriver(options);
 
 		// Create a wait. All test methods use this.
-				wait = new WebDriverWait(driver, 15);
-	    // Maximize Window
-				driver.manage().window().maximize();
+		wait = new WebDriverWait(driver, 15);
+		// Maximize Window
+		driver.manage().window().maximize();
 	}
 
 	@AfterClass // Change this to @AfterMethod for parallel execution of test cases with
-					// selenium grid
+				// selenium grid
 	public void teardown() {
 		driver.quit();
 	}
