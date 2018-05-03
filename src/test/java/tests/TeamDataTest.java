@@ -40,7 +40,7 @@ public class TeamDataTest extends BaseTest {
 	String teamBottomLink = "/html/body/div/footer/div/div/div[2]/div[1]/div[2]/ul/li[1]/ul/li[2]/a";
 	boolean navigateToBranch = false;
     Logger Log = Logger.getLogger(Logger.class.getName());
-
+    Map<String, LinkedHashMap<String, String>> depNameTitleMap = null;
     
 	@Test(priority = 0, description="Validation of the employees in All tab against sum of the employees in departments")
 	public void validateEmployeeCountsInAllandDepts() throws InterruptedException {
@@ -49,7 +49,8 @@ public class TeamDataTest extends BaseTest {
        // ExtentTestManager.getTest().setDescription("Validation of the employees in All tab against sum of the employees in departments.");
 
 		
-		Map<String, LinkedHashMap<String, String>> depNameTitleMap = getEmployeeDeptData();
+		if(depNameTitleMap==null)
+			depNameTitleMap = getEmployeeDeptData();
 		LinkedHashMap<String, String> allEmployees = depNameTitleMap.get("ALL");
 		int numEmployees = 0;
 		for (String teamName : depNameTitleMap.keySet()) {
@@ -77,6 +78,7 @@ public class TeamDataTest extends BaseTest {
 				}
 			}
 			if(!found) {
+				Reporter.log("The following employee is  missing employ in the individual department tabs, but is present in All tab"+allEmployee);
 				System.out.println("missing employee : "+allEmployee);
 				System.out.println("missing employee title : "+allEmployees.get(allEmployee));
 			}
@@ -89,8 +91,9 @@ public class TeamDataTest extends BaseTest {
 		//ExtentReports Description
        // ExtentTestManager.getTest().setDescription("Verifying no employee is repeated under two or more departments");
 
+		if(depNameTitleMap==null)
+			depNameTitleMap = getEmployeeDeptData();
 		
-		Map<String, LinkedHashMap<String, String>> depNameTitleMap = getEmployeeDeptData();
 		for(String teamName : depNameTitleMap.keySet()) {
 			if(!teamName.equals("ALL")) {
 				for(String otherTeamName:depNameTitleMap.keySet()) {
@@ -110,8 +113,9 @@ public class TeamDataTest extends BaseTest {
 		//ExtentReports Description
         //ExtentTestManager.getTest().setDescription("Verify that employee names and titles/departments match between All tab and individual departments");
 
+		if(depNameTitleMap==null)
+			depNameTitleMap = getEmployeeDeptData();
 		
-		Map<String, LinkedHashMap<String, String>> depNameTitleMap = getEmployeeDeptData();
 		LinkedHashMap<String, String> allEmployees = depNameTitleMap.get("ALL");
 		Set<String> allEmployeesNames = allEmployees.keySet();
 		for (String teamName : depNameTitleMap.keySet()) {
@@ -127,6 +131,8 @@ public class TeamDataTest extends BaseTest {
 		}
 	}
 
+	
+	
 	private Map<String, LinkedHashMap<String, String>> getEmployeeDeptData() throws InterruptedException {
 		TeamsPage teamsPage = new TeamsPage(driver, wait);
 		HomePage homePage = new HomePage(driver, wait);
@@ -168,9 +174,9 @@ public class TeamDataTest extends BaseTest {
 			// employee dept
 			List<WebElement> deptList = teamsPage.readTeamNames("h4");
 
-			int teamdepsize;
-			teamdepsize = deptList.size();
-			// String[] teamNames = new String[teamsize];
+			 
+			 int teamdepsize = deptList.size();
+			
 			List<String> teamDepList = new ArrayList<String>();
 			LinkedHashMap<String, String> nameDepMap = new LinkedHashMap<String, String>();
 			int actualdepsize = 0;
@@ -202,5 +208,6 @@ public class TeamDataTest extends BaseTest {
 		}
 		return depNameTitleMap;
 	}
-
+	
+	
 }

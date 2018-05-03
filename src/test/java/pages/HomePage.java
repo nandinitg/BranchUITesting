@@ -3,10 +3,8 @@ package pages;
 import static org.testng.Assert.assertEquals;
 
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -41,12 +39,20 @@ public class HomePage extends BasePage{
     String branchWebsiteSectionId = "hp-solutions";
     String cookieAlertId = "CybotCookiebotDialogBodyButtonAccept";
 
+    String pricingLinkXpath = "/html/body/div/header/nav/div[2]/header/div[1]/ul/li[2]/a[1]";
+    String pricingTitle = "Pricing - Deep Linking Products - Branch Metrics";
+    String whyBranchLinkXpath = "/html/body/div/header/nav/div[2]/header/div[1]/ul/li[2]/a[2]";
+    String whyBranchTitle = "How Branch links work";
+    String signInLinkXpath = "/html/body/div/header/nav/div[2]/header/div[1]/ul/li[1]/a[1]/p";
+    String signInPageTitle = "Dashboard - Branch Metrics";
+    String developersLinkXpath = "/html/body/div/header/nav/div[2]/header/div[1]/ul/li[1]/a[2]";
+    String developersTitle = "Branch documentation";
+    String learnMoreAttributionXpath = "//*[@id=\"hp-solutions\"]/div[1]/div[3]/div[2]/p[3]/a";
+    String learnMoreAttributionTitle = "People-Based Attribution - More than Measurement | Branch";
+    String learnMoreDeeplinksLinkXpath = "//*[@id=\"hp-solutions\"]/div[1]/div[2]/div[1]/p[3]/a";
+    String learnMoreDeeplinksTtitle="How Branch links work";
+ 
     //*********Page Methods*********
-
-    //Go to Homepage
-    public void openUrl (String url){
-        driver.get(url);
-        }
 
     //Go to Branch website
     public boolean navigateToBranchWebsite () throws InterruptedException {
@@ -59,48 +65,19 @@ public class HomePage extends BasePage{
     	basePage.waitUntilElementLoads(googleResultsstats);
     	
     	 driver.findElement(By.linkText("Branch.io")).click();
-    			 
-     	/*List<WebElement> searchResults = basePage.findEelementsByTagName("a");
-    	
-    	for (WebElement webElement : searchResults)
-        {
-            
-    	
-    		System.out.println(webElement.getAttribute("href"));
-    		if((String)(webElement.getAttribute("href")) == branchLink)
-    		  {
-    			System.out.println("FOUND THE BRANCH LINK");
-    			webElement.click();}*/
-    		//Thread.sleep(10000);
-    		
-    		String actualTitle = driver.getTitle();
+    	 String actualTitle = driver.getTitle();
     		System.out.println("TITLE IS "+actualTitle);
     		assertEquals(actualTitle, branchWebsiteTitle);
     		
     		basePage.waitUntilElementLoads(branchWebsiteSectionId);
-    		Thread.sleep(50000);
+    		Thread.sleep(20000);
     		
     		
     		//handle cookie popup
     	  	boolean cookiepresent =  checkForCookiePopup(cookieAlertId);
     		if (cookiepresent)
     			driver.findElement(By.id(cookieAlertId)).click();
-    		
     	
-    		
-    		
-    		
-    	/*	try {
-    		   if(driver.findElement(By.id(cookieAlertId)).isDisplayed())
-    			  driver.findElement(By.id(cookieAlertId)).click();
-    		   System.out.println("inside try");
-    		  
-    		} catch (NoSuchElementException e) {
-    			e.printStackTrace();
-    		}*/
-  
-    		
-    		
     		boolean isTheTextPresent = driver.getPageSource().contains(branchWebsiteText);
     		if (actualTitle==branchWebsiteTitle && isTheTextPresent) {
     		   System.out.println("Branch website launched");
@@ -117,15 +94,33 @@ public class HomePage extends BasePage{
 	         else return false;
 	      }
 	      catch (NoSuchElementException exception) {
-	    	System.out.println("INSIDE CATCH");
+	    	exception.printStackTrace();
 	        return false;
 	      }
 	      catch (StaleElementReferenceException exception) {
-	    	  System.out.println("INSIDE CATCH");
+	    	  exception.printStackTrace();
 	        return false;
 	      }
 		}
-		
+	
+     private void verifyNavigation(String linkXpath, String expectedTitle) throws InterruptedException {
+    	 BasePage basePage = new BasePage(driver, wait);
+    	 driver.findElement(By.xpath(linkXpath)).click();
+   	  	String actualTitle = driver.getTitle();
+   	  	assertEquals(actualTitle, expectedTitle);
+ 		driver.get("https://branch.io/");
+ 		basePage.waitUntilElementLoads(branchWebsiteSectionId);
+ 	 }
+    
+     public void verifyLinks () throws InterruptedException {
+    	 verifyNavigation(pricingLinkXpath,pricingTitle);
+    	 verifyNavigation(whyBranchLinkXpath,whyBranchTitle);
+    	 verifyNavigation(signInLinkXpath,signInPageTitle);
+    	 verifyNavigation(developersLinkXpath,developersTitle);
+    	 verifyNavigation(learnMoreAttributionXpath,learnMoreAttributionTitle);
+    	 verifyNavigation(learnMoreDeeplinksLinkXpath,learnMoreDeeplinksTtitle);
+     }
+     
     }
     	
     	

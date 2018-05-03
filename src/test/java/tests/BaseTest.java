@@ -16,10 +16,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
-
-//import com.gargoylesoftware.htmlunit.javascript.host.Map;
-
-//import com.gargoylesoftware.htmlunit.javascript.host.URL;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -27,10 +23,21 @@ public class BaseTest {
 	public WebDriver driver;
 	public WebDriverWait wait;
 
-	@BeforeMethod // Change this to @AfterMethod for parallel execution of test cases with
+	@BeforeClass // Change this to @BeforeMethod for parallel execution of test cases with
 					// selenium grid
 	@Parameters({ "browsername" })
 	public void setupTest(String browser) throws MalformedURLException {
+		
+	//Configs for executing the test suite on different platform like Mac/Linux and different browsers like Chrome/safari
+		
+				/*
+				 * String Node = "http://192.168.0.15:5555/wd/hub"; //Desired Capabilities
+				 * DesiredCapabilities caps = DesiredCapabilities.chrome();
+				 * caps.setCapability("browserName", browser); caps.setCapability("platform",
+				 * Platform.MAC); caps.setCapability("version", "66.0.3359.139"); driver = new
+				 * RemoteWebDriver(new URL(Node),caps);
+				 */
+		
 
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
@@ -42,22 +49,13 @@ public class BaseTest {
 		options.setExperimentalOption("prefs", prefs);
 		driver = new ChromeDriver(options);
 
-		/*
-		 * String Node = "http://192.168.0.15:5555/wd/hub"; //Desired Capabilities
-		 * DesiredCapabilities caps = DesiredCapabilities.chrome();
-		 * caps.setCapability("browserName", browser); caps.setCapability("platform",
-		 * Platform.MAC); caps.setCapability("version", "66.0.3359.139"); driver = new
-		 * RemoteWebDriver(new URL(Node),caps);
-		 */
-
 		// Create a wait. All test methods use this.
-		wait = new WebDriverWait(driver, 15);
-
-		// Maximize Window
-		driver.manage().window().maximize();
+				wait = new WebDriverWait(driver, 15);
+	    // Maximize Window
+				driver.manage().window().maximize();
 	}
 
-	@AfterMethod // Change this to @AfterMethod for parallel execution of test cases with
+	@AfterClass // Change this to @AfterMethod for parallel execution of test cases with
 					// selenium grid
 	public void teardown() {
 		driver.quit();
@@ -65,7 +63,6 @@ public class BaseTest {
 
 	@BeforeSuite
 	public void beforeSuite() {
-
 		System.setProperty("webdriver.chrome.driver", "/Users/Nandini/Documents/Workspace-MyTest/Drivers/chromedriver");
 	}
 

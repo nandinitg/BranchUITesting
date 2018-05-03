@@ -11,6 +11,7 @@
 		<classes>
 			<class name="tests.BaseTest" />
 			<class name="tests.TeamDataTest" />
+			<class name="tests.UITest" />
 		</classes>
 	</test>
     <!-- test name="safariTest">
