@@ -42,7 +42,7 @@ public class TeamDataTest extends BaseTest {
 	// LinkedHashMap<String, String> allEmployees = depNameTitleMap.get("ALL");
 
 	@Test(priority = 0, description = "Verification of the number of employees in All tab against sum of the employees in departments")
-	public void validateEmployeeCountsInAllandDepts() throws InterruptedException {
+	public void testVerifyEmployeeCountsInAllandDepts() throws InterruptedException {
 
 		// ExtentReports Description
 		// ExtentTestManager.getTest().setDescription("Validation of the employees in
@@ -68,7 +68,7 @@ public class TeamDataTest extends BaseTest {
 	}
 
 	@Test(priority = 1, description = "Finding the employees who are mentioned in All tab, but not present in any of the departments")
-	public void findMissingEmployees() throws InterruptedException {
+	public void testFindMissingEmployees() throws InterruptedException {
 		LinkedHashMap<String, String> allEmployees = depNameTitleMap.get("ALL");
 		for (String allEmployee : allEmployees.keySet()) {
 			Boolean found = false;
